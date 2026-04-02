@@ -127,6 +127,7 @@ coverage/
 
 # yarn
 *.node
+!mdpdf.win32-arm64-msvc.node
 .pnp.*
 .yarn/*
 !.yarn/patches
