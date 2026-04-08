@@ -21,6 +21,7 @@ let TEST_FILES = [
   "torture_typst.md",
   "torture_typst_2.md",
   "malformed_md_html.md",
+  "test-languages.md",
 ].concat(
   [...new Array(numFuzzRegressionTests)].map((_, i) => `fuzz_${i + 1}.md`),
 );

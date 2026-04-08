@@ -54,6 +54,7 @@
     "prepublishOnly": "yarn napi prepublish -t npm",
     "artifacts": "yarn napi artifacts",
     "test": "node tests/test.mjs",
+    "test:clean": "node -e \"require('fs').readdirSync('tests').filter(f=>/\\.(pdf|typ)$/.test(f)).forEach(f=>require('fs').unlinkSync('tests/'+f))\"",
     "lint": "prettier --check .",
     "lint:fix": "prettier -w .",
     "typecheck": "tsc"
