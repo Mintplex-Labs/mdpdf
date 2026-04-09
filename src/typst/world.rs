@@ -50,14 +50,17 @@ impl MdpdfWorld {
         vec![
             // Noto Emoji fonts (this is first so we don't use emoji that are available in other fonts)
             include_bytes!("../../fonts/noto-emoji/NotoEmoji-Regular.ttf").to_vec(),
+            // Noto Sans CJK fonts (for Korean, Japanese, Chinese fallback)
+            include_bytes!("../../fonts/noto-kr/NotoSansKR-Regular.ttf").to_vec(),
+            include_bytes!("../../fonts/noto-kr/NotoSansKR-Bold.ttf").to_vec(),
+            include_bytes!("../../fonts/noto-sc/NotoSansSC-Regular.ttf").to_vec(),
+            include_bytes!("../../fonts/noto-sc/NotoSansSC-Bold.ttf").to_vec(),
             // Libertinus fonts
             include_bytes!("../../fonts/libertinus/LibertinusSerif-Regular.ttf").to_vec(),
             include_bytes!("../../fonts/libertinus/LibertinusSerif-Bold.ttf").to_vec(),
             include_bytes!("../../fonts/libertinus/LibertinusSerif-Italic.ttf").to_vec(),
             include_bytes!("../../fonts/libertinus/LibertinusSerif-BoldItalic.ttf").to_vec(),
-            // include_bytes!("../../fonts/libertinus/LibertinusSerif-Semibold.ttf").to_vec(),
-            // include_bytes!("../../fonts/libertinus/LibertinusSerif-SemiboldItalic.ttf").to_vec(),
-            // DejaVu fonts
+            // DejaVu fonts (monospace for code)
             include_bytes!("../../fonts/dejavu/DejaVuSansMono.ttf").to_vec(),
             include_bytes!("../../fonts/dejavu/DejaVuSansMono-Bold.ttf").to_vec(),
         ]
