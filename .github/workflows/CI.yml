@@ -295,7 +295,7 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
           if git log -1 --pretty=%B | grep "^v[0-9]\+\.[0-9]\+\.[0-9]\+$";
           then
-            corepack yarn napi prepublish -t npm --skip-gh-release
+            corepack yarn napi prepublish -t npm
             for dir in npm/*; do
               if [ -d "$dir" ]; then
                 echo "Publishing $dir..."
@@ -305,7 +305,7 @@ jobs:
             npm publish --access public
           elif git log -1 --pretty=%B | grep "^v[0-9]\+\.[0-9]\+\.[0-9]\+";
           then
-            corepack yarn napi prepublish -t npm --skip-gh-release
+            corepack yarn napi prepublish -t npm
             for dir in npm/*; do
               if [ -d "$dir" ]; then
                 echo "Publishing $dir..."
