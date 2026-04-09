@@ -292,13 +292,26 @@ jobs:
       - name: Publish
         run: |
           npm config set provenance true
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
           if git log -1 --pretty=%B | grep "^v[0-9]\+\.[0-9]\+\.[0-9]\+$";
           then
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            corepack yarn napi prepublish -t npm --skip-gh-release
+            for dir in npm/*; do
+              if [ -d "$dir" ]; then
+                echo "Publishing $dir..."
+                npm publish "$dir" --access public
+              fi
+            done
             npm publish --access public
           elif git log -1 --pretty=%B | grep "^v[0-9]\+\.[0-9]\+\.[0-9]\+";
           then
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+            corepack yarn napi prepublish -t npm --skip-gh-release
+            for dir in npm/*; do
+              if [ -d "$dir" ]; then
+                echo "Publishing $dir..."
+                npm publish "$dir" --tag next --access public
+              fi
+            done
             npm publish --tag next --access public
           else
             echo "Not a release, skipping publish"
