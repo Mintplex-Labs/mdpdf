@@ -48,7 +48,6 @@
     ]
   },
   "scripts": {
-    "postinstall": "node scripts/postinstall.js",
     "build": "yarn napi build --platform --release --features node",
     "build:debug": "yarn napi build --platform",
     "prepublishOnly": "yarn napi prepublish -t npm",
