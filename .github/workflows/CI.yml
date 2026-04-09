@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Enable Corepack
-        run: corepack enable && corepack prepare yarn@4.9.2 --activate && corepack install --global yarn@4.9.2
+        run: corepack enable && corepack prepare yarn@1.22.22 --activate && corepack install --global yarn@1.22.22
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
@@ -37,7 +37,7 @@ jobs:
         with:
           components: clippy, rustfmt
       - name: Install dependencies
-        run: corepack use yarn@4.9.2 && corepack yarn install
+        run: corepack use yarn@1.22.22 && corepack yarn install
       - name: Prettier
         run: corepack yarn lint
       - name: Typecheck
@@ -60,19 +60,19 @@ jobs:
           # Build in Docker so we can build with glibc 2.34
           - host: ubuntu-latest
             target: x86_64-unknown-linux-gnu
-            build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace amazonlinux:2023 sh -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.88.0 && . \"/root/.cargo/env\" && export PATH=\"/root/.cargo/bin:${PATH}\" && curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && dnf update && dnf install -y nodejs gcc pkg-config openssl-devel && corepack enable && corepack prepare yarn@4.9.2 --activate && yarn install && yarn build --target x86_64-unknown-linux-gnu"
+            build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace amazonlinux:2023 sh -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.88.0 && . \"/root/.cargo/env\" && export PATH=\"/root/.cargo/bin:${PATH}\" && curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && dnf update && dnf install -y nodejs gcc pkg-config openssl-devel && corepack enable && corepack prepare yarn@1.22.22 --activate && yarn install && yarn build --target x86_64-unknown-linux-gnu"
           # Build in Docker so we can build with glibc 2.34
           - host: ubuntu-24.04-arm
             target: aarch64-unknown-linux-gnu
-            build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace amazonlinux:2023 sh -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.88.0 && . \"/root/.cargo/env\" && export PATH=\"/root/.cargo/bin:${PATH}\" && curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && dnf update && dnf install -y nodejs gcc pkg-config openssl-devel && corepack enable && corepack prepare yarn@4.9.2 --activate && yarn install && yarn build --target aarch64-unknown-linux-gnu"
+            build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace amazonlinux:2023 sh -c "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.88.0 && . \"/root/.cargo/env\" && export PATH=\"/root/.cargo/bin:${PATH}\" && curl -fsSL https://rpm.nodesource.com/setup_20.x | bash - && dnf update && dnf install -y nodejs gcc pkg-config openssl-devel && corepack enable && corepack prepare yarn@1.22.22 --activate && yarn install && yarn build --target aarch64-unknown-linux-gnu"
           # Build in Docker so we can build with musl
           - host: ubuntu-latest
             target: x86_64-unknown-linux-musl
-            build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace rust:1.88.0-alpine sh -c "apk add --no-cache nodejs npm yarn openssl-dev musl-dev && npm install -g corepack && corepack enable && corepack prepare yarn@4.9.2 --activate && yarn install && yarn build --target x86_64-unknown-linux-musl"
+            build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace rust:1.88.0-alpine sh -c "apk add --no-cache nodejs npm yarn openssl-dev musl-dev && npm install -g corepack && corepack enable && corepack prepare yarn@1.22.22 --activate && yarn install && yarn build --target x86_64-unknown-linux-musl"
           ### currently broken with "error: linker `aarch64-linux-musl-gcc` not found"
           # - host: ubuntu-latest
           #   target: aarch64-unknown-linux-musl
-          #   build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace --platform linux/arm64 rust:1.88.0-alpine sh -c "apk add --no-cache nodejs npm yarn openssl-dev musl-dev build-base && npm install -g corepack && corepack enable && corepack prepare yarn@4.9.2 --activate && yarn install && yarn build --target aarch64-unknown-linux-musl"
+          #   build: docker run --rm -v "$GITHUB_WORKSPACE":/workspace -w /workspace --platform linux/arm64 rust:1.88.0-alpine sh -c "apk add --no-cache nodejs npm yarn openssl-dev musl-dev build-base && npm install -g corepack && corepack enable && corepack prepare yarn@1.22.22 --activate && yarn install && yarn build --target aarch64-unknown-linux-musl"
           - host: windows-latest
             build: corepack yarn build --target x86_64-pc-windows-msvc
             target: x86_64-pc-windows-msvc
@@ -84,7 +84,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Enable Corepack
-        run: corepack enable && corepack prepare yarn@4.9.2 --activate && corepack install --global yarn@4.9.2
+        run: corepack enable && corepack prepare yarn@1.22.22 --activate && corepack install --global yarn@1.22.22
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
@@ -124,7 +124,7 @@ jobs:
         shell: bash
       - name: Install dependencies
         if: ${{ !contains(matrix.settings.target, 'musl') && !contains(matrix.settings.target, 'aarch64-unknown-linux-musl') }}
-        run: corepack use yarn@4.9.2 && corepack yarn install
+        run: corepack use yarn@1.22.22 && corepack yarn install
       - name: Build
         run: ${{ matrix.settings.build }}
         shell: bash
@@ -163,14 +163,14 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Enable Corepack
-        run: corepack enable && corepack prepare yarn@4.9.2 --activate && corepack install --global yarn@4.9.2
+        run: corepack enable && corepack prepare yarn@1.22.22 --activate && corepack install --global yarn@1.22.22
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: ${{ matrix.node }}
           architecture: ${{ matrix.settings.architecture }}
       - name: Install dependencies
-        run: corepack use yarn@4.9.2 && corepack yarn install
+        run: corepack use yarn@1.22.22 && corepack yarn install
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -200,7 +200,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Enable Corepack
-        run: corepack enable && corepack prepare yarn@4.9.2 --activate && corepack install --global yarn@4.9.2
+        run: corepack enable && corepack prepare yarn@1.22.22 --activate && corepack install --global yarn@1.22.22
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
@@ -226,7 +226,7 @@ jobs:
           " >> $GITHUB_OUTPUT
       - name: Install dependencies
         run: |
-          corepack use yarn@4.9.2
+          corepack use yarn@1.22.22
           corepack yarn config set --json supportedArchitectures.cpu '["current", "arm64", "x64", "arm"]'
           corepack yarn config set --json supportedArchitectures.libc '["current", "musl", "gnu"]'
           corepack yarn install
@@ -271,13 +271,13 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Enable Corepack
-        run: corepack enable && corepack prepare yarn@4.9.2 --activate && corepack install --global yarn@4.9.2
+        run: corepack enable && corepack prepare yarn@1.22.22 --activate && corepack install --global yarn@1.22.22
       - name: Setup Node
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 20
       - name: Install dependencies
-        run: corepack use yarn@4.9.2 && corepack yarn install
+        run: corepack use yarn@1.22.22 && corepack yarn install
       - name: create npm dirs
         run: corepack yarn napi create-npm-dirs
       - name: Download all artifacts
