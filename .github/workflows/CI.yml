@@ -250,7 +250,7 @@ jobs:
         uses: addnab/docker-run-action@v3
         with:
           image: ${{ steps.docker.outputs.IMAGE }}
-          options: "-v ${{ github.workspace }}:${{ github.workspace }} -w ${{ github.workspace }} --platform ${{ steps.docker.outputs.PLATFORM }}"
+          options: "-v ${{ github.workspace }}:${{ github.workspace }} -w ${{ github.workspace }} -e CI=true --platform ${{ steps.docker.outputs.PLATFORM }}"
           run: |
             if echo '${{ matrix.target }}' | grep -q '-musl$'; then
               apk add --no-cache openssl
