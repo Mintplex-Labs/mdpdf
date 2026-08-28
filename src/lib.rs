@@ -255,9 +255,7 @@ async fn markdown_to_typst_async(
                 //         "#link(label(\"{}\"))[{}]", current_link_url.replace("#", ""), current_link_text
                 //     ))
                 // } else {
-                let result = &format!(
-                    "#link(\"{current_link_url}\")[{current_link_text}] (`{current_link_url}`)"
-                );
+                let result = &format!("#link(\"{current_link_url}\")[{current_link_text}];");
                 // Get the current output buffer based on context
                 let current_output: &mut String = if in_code_block {
                     &mut current_code_block
@@ -1172,9 +1170,8 @@ print(f"User: {user}")
         assert!(result.is_ok());
 
         let (typst_code, _) = result.unwrap();
-        assert!(typst_code.contains(
-            "#link(\"https://www.rust-lang.org/\")[Rust] (`https://www.rust-lang.org/`)"
-        ));
+        assert!(typst_code.contains("#link(\"https://www.rust-lang.org/\")[Rust]"));
+        assert!(!typst_code.contains("(`https://www.rust-lang.org/`)"));
     }
 
     #[test]
@@ -2156,7 +2153,7 @@ This is a new paragraph with <u>underlined text."#;
 
         let (typst_code, _) = result.unwrap();
 
-        assert!(typst_code.contains(r#"+ Third item with #link("http://test.com")[link with \*\*bold inside] (`http://test.com`) and \*italic not closed"#));
+        assert!(typst_code.contains(r#"+ Third item with #link("http://test.com")[link with \*\*bold inside]; and \*italic not closed"#));
         assert!(typst_code.contains(
             "+ Second item with #strong[markdown bold and #emph[HTML em]] but em not closed"
         ));
